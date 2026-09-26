@@ -51,25 +51,28 @@ export default function Header({ settings }: { settings: Record<string, string> 
             ))}
           </nav>
           <div className="flex items-center gap-2.5">
-            {customer ? (
-              <IconButton aria-label="Account" onClick={(e) => setAnchorEl(e.currentTarget)}
-                sx={{ width: 44, height: 44, borderRadius: "50%", bgcolor: "#fdeef2", color: "#e63c64", "&:hover": { bgcolor: "#fbdde6" } }}>
-                <PersonRoundedIcon sx={{ fontSize: 22 }} />
-              </IconButton>
-            ) : (
-              <Link href="/account/signin" aria-label="Sign in"
-                className="grid h-11 w-11 place-items-center rounded-full bg-pinkfaint text-choco transition hover:bg-pinksoft hover:text-pink">
-                <PersonRoundedIcon sx={{ fontSize: 22 }} />
+            {/* profile + cart live in the top bar only on desktop; on mobile they live in the burger menu */}
+            <div className="hidden items-center gap-2.5 lg:flex">
+              {customer ? (
+                <IconButton aria-label="Account" onClick={(e) => setAnchorEl(e.currentTarget)}
+                  sx={{ width: 44, height: 44, borderRadius: "50%", bgcolor: "#fdeef2", color: "#e63c64", "&:hover": { bgcolor: "#fbdde6" } }}>
+                  <PersonRoundedIcon sx={{ fontSize: 22 }} />
+                </IconButton>
+              ) : (
+                <Link href="/account/signin" aria-label="Sign in"
+                  className="grid h-11 w-11 place-items-center rounded-full bg-pinkfaint text-choco transition hover:bg-pinksoft hover:text-pink">
+                  <PersonRoundedIcon sx={{ fontSize: 22 }} />
+                </Link>
+              )}
+              <Link href="/cart" aria-label="Cart" className="grid h-11 w-11 place-items-center rounded-full bg-pinkfaint text-choco transition hover:bg-pinksoft hover:text-pink">
+                <Badge badgeContent={cart.count} color="primary" sx={{ "& .MuiBadge-badge": { transform: "scale(.9)" } }}>
+                  <ShoppingBagRoundedIcon sx={{ fontSize: 21 }} />
+                </Badge>
               </Link>
-            )}
-            <Link href="/cart" aria-label="Cart" className="grid h-11 w-11 place-items-center rounded-full bg-pinkfaint text-choco transition hover:bg-pinksoft hover:text-pink">
-              <Badge badgeContent={cart.count} color="primary" sx={{ "& .MuiBadge-badge": { transform: "scale(.9)" } }}>
-                <ShoppingBagRoundedIcon sx={{ fontSize: 21 }} />
-              </Badge>
-            </Link>
-            <Link href="/custom" className="hidden rounded-full bg-pink px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2 sm:inline-flex">
-              Order Custom Cake
-            </Link>
+              <Link href="/custom" className="rounded-full bg-pink px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">
+                Order Custom Cake
+              </Link>
+            </div>
             <button onClick={() => setOpen(true)} aria-label="Menu" className="grid h-11 w-11 place-items-center rounded-xl bg-pinkfaint text-choco lg:hidden">
               <MenuRoundedIcon />
             </button>
@@ -95,19 +98,40 @@ export default function Header({ settings }: { settings: Record<string, string> 
               {label}
             </ListItemButton>
           ))}
-          <ListItemButton component={Link} href="/account/orders"
+
+          <div className="mx-6 my-2 border-t border-line" />
+
+          {/* cart + account — moved here from the top bar on mobile */}
+          <ListItemButton component={Link} href="/cart"
             sx={{ borderRadius: 2, mx: 1.5, mb: 0.5, fontSize: 15 }}>
-            {customer ? "📦 My Orders" : "👤 Sign In / My Account"}
+            <span className="mr-3 text-lg">🛍</span> Cart
+            {cart.count > 0 && (
+              <span className="ml-auto grid h-6 min-w-[24px] place-items-center rounded-full bg-pink px-1.5 text-2xs font-bold text-white">{cart.count}</span>
+            )}
           </ListItemButton>
+          {customer ? (
+            <>
+              <ListItemButton component={Link} href="/account/orders"
+                sx={{ borderRadius: 2, mx: 1.5, mb: 0.5, fontSize: 15 }}>
+                <span className="mr-3 text-lg">📦</span> My Orders
+              </ListItemButton>
+              <ListItemButton onClick={async () => { setOpen(false); await signOut(); }}
+                sx={{ borderRadius: 2, mx: 1.5, mb: 0.5, fontSize: 15, color: "#c0392b" }}>
+                <span className="mr-3 text-lg">🚪</span> Sign Out
+                <span className="ml-auto truncate text-xs text-mut">{customer.name || customer.email}</span>
+              </ListItemButton>
+            </>
+          ) : (
+            <ListItemButton component={Link} href="/account/signin"
+              sx={{ borderRadius: 2, mx: 1.5, mb: 0.5, fontSize: 15 }}>
+              <span className="mr-3 text-lg">👤</span> Sign In / My Account
+            </ListItemButton>
+          )}
         </List>
         <div className="px-4 pb-5">
           <Link href="/custom" onClick={() => setOpen(false)}
             className="block rounded-full bg-pink px-5 py-3.5 text-center text-base font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:bg-pink2">
             🎂 Order Custom Cake
-          </Link>
-          <Link href="/cart" onClick={() => setOpen(false)}
-            className="mt-2.5 block rounded-full border-2 border-line2 px-5 py-3 text-center text-sm font-semibold text-choco transition hover:border-pink hover:text-pink">
-            View Cart ({cart.count})
           </Link>
         </div>
       </Drawer>
