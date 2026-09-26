@@ -38,7 +38,7 @@ function GalleryInner() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><a href="/" className="hover:text-pink">Home</a> › <span>Gallery</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">Our Cake <span className="font-script text-pink">Gallery</span></h1>
@@ -46,7 +46,7 @@ function GalleryInner() {
         </div>
       </section>
 
-      <section className="py-14">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-9 flex flex-wrap items-center gap-3.5">
             <TextField

@@ -42,7 +42,7 @@ export default async function Home() {
       </section>
 
       {/* categories */}
-      <section className="py-20">
+      <section className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHead eyebrow="Our Specialties" title={<>Explore Our Cake <Script>Categories</Script></>} sub="Little treats, big happiness — discover cakes for every celebration" />
           <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
@@ -70,7 +70,7 @@ export default async function Home() {
       </section>
 
       {/* build custom cake */}
-      <section className="bg-blush py-20">
+      <section className="bg-blush py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHead eyebrow="How It Works" title={<>Build Your <Script>Custom Cake</Script></>} sub="Create a cake that's uniquely yours in just a few steps" />
           <div className="grid gap-7 md:grid-cols-3">
@@ -101,10 +101,10 @@ export default async function Home() {
       <BestSellers products={products} />
 
       {/* event band */}
-      <section className="bg-cream py-20">
+      <section className="bg-cream py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal>
-            <div className="relative grid gap-12 overflow-hidden rounded-[32px] bg-gradient-to-br from-choco to-choco2 px-8 py-14 text-[#f4e3dc] md:px-14 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+            <div className="relative grid gap-12 overflow-hidden rounded-[32px] bg-gradient-to-br from-choco to-choco2 px-8 py-10 text-[#f4e3dc] md:px-14 md:py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
               <i className="absolute -right-24 -top-24 h-[300px] w-[300px] rounded-full border-[34px] border-pink/[0.16]" />
               <i className="absolute -bottom-28 -left-16 h-[260px] w-[260px] rounded-full bg-pink/[0.09]" />
               <div className="relative z-10">
@@ -147,7 +147,7 @@ export default async function Home() {
       </section>
 
       {/* testimonials */}
-      <section className="bg-blush py-20">
+      <section className="bg-blush py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHead eyebrow="Testimonials" title={<>What Our <Script>Customers Say</Script></>} sub="Real words from real celebrations across Sahiwal" />
           <div className="grid gap-6 md:grid-cols-3">
@@ -171,13 +171,17 @@ export default async function Home() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-16 text-center">
+      <section className="mx-auto max-w-6xl px-6 py-12 text-center sm:py-14">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold text-choco sm:text-4xl">Ready to order your <Script>dream cake?</Script></h2>
-          <p className="mt-2.5 text-mut">Call us, WhatsApp us, or build your custom cake online in minutes.</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3.5">
-            <Link href="/custom" className="rounded-full bg-pink px-8 py-4 font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">Build Custom Cake</Link>
-            <a href={`https://wa.me/${settings.whatsapp_number}`} className="rounded-full bg-choco px-8 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16]">💬 WhatsApp {settings.contact_phone}</a>
+          <div className="relative overflow-hidden rounded-[32px] border border-line/70 bg-gradient-to-br from-pinkfaint via-white to-blush/80 px-8 py-11 sm:py-13">
+            <i className="absolute -left-16 -top-16 h-44 w-44 rounded-full bg-pink/[0.07]" />
+            <i className="absolute -bottom-20 -right-14 h-52 w-52 rounded-full bg-gold/[0.09]" />
+            <h2 className="relative font-display text-3xl font-bold text-choco sm:text-4xl">Ready to order your <Script>dream cake?</Script></h2>
+            <p className="relative mt-2.5 text-mut">Call us, WhatsApp us, or build your custom cake online in minutes.</p>
+            <div className="relative mt-7 flex flex-wrap justify-center gap-3.5">
+              <Link href="/custom" className="rounded-full bg-pink px-8 py-4 font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">Build Custom Cake</Link>
+              <a href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-choco px-8 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16]">💬 WhatsApp {settings.contact_phone}</a>
+            </div>
           </div>
         </Reveal>
       </section>

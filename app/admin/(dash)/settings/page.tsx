@@ -35,6 +35,11 @@ const GROUPS: Group[] = [
   { title: "Footer", icon: "🦶", fields: [
     ["footer_tagline", "Brand tagline", true], ["footer_note", "Bottom bar note"],
   ]},
+  { title: "Social Links (footer icons)", icon: "🔗", fields: [
+    ["facebook_url", "Facebook page URL (leave empty to hide icon)"],
+    ["instagram_url", "Instagram profile URL (leave empty to hide icon)"],
+    ["youtube_url", "YouTube channel URL (leave empty to hide icon)"],
+  ]},
 ];
 
 export default function AdminSettings() {

@@ -20,7 +20,7 @@ export default function Hero({ settings }: { settings: Record<string, string> })
         <div>
           <motion.span {...fadeUp(0)}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-line2 bg-white px-4.5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-pink shadow-card">
-            <i className="h-[7px] w-[7px] animate-pulse rounded-full bg-pink" /> {settings.hero_badge}
+            <i className="h-[7px] w-[7px] animate-pulse rounded-full bg-pink" /><span>{settings.hero_badge}</span>
           </motion.span>
           <motion.h1 {...fadeUp(0.1)} className="font-display text-[clamp(38px,4.6vw,60px)] font-extrabold leading-[1.13] text-choco">
             {settings.hero_title_1}
@@ -50,7 +50,7 @@ export default function Hero({ settings }: { settings: Record<string, string> })
           className="relative mx-auto w-full max-w-[480px]">
           <div className="relative aspect-[0.92] -rotate-2 overflow-hidden rounded-[46%_46%_46%_46%/42%_42%_44%_44%] border-10 border-white shadow-pop">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/hero-cake.png" alt="Custom celebration cake by Cake Delight Sahiwal" className="h-full w-full object-cover" />
+            <img src="/img/hero-cake.jpg" alt="Custom celebration cake by Cake Delight Sahiwal" fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
           </div>
           <i className="absolute -left-11 -bottom-4 -z-10 h-[150px] w-[150px] opacity-30"
             style={{ backgroundImage: "radial-gradient(#e63c64 2.4px, transparent 2.4px)", backgroundSize: "22px 22px" }} />

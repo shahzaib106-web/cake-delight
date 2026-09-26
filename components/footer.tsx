@@ -13,12 +13,13 @@ import { Logo } from "./ui";
 
 export default function Footer({ settings }: { settings: Record<string, string> }) {
   const tel = String(settings.contact_phone || "").replace(/[^\d+]/g, "");
+  /* every social button must lead somewhere real — icons with no URL set in admin are hidden */
   const socials = [
-    { icon: <FacebookRoundedIcon sx={{ fontSize: 18 }} />, href: "#", label: "Facebook" },
-    { icon: <InstagramIcon sx={{ fontSize: 18 }} />, href: "#", label: "Instagram" },
+    settings.facebook_url && { icon: <FacebookRoundedIcon sx={{ fontSize: 18 }} />, href: settings.facebook_url, label: "Facebook" },
+    settings.instagram_url && { icon: <InstagramIcon sx={{ fontSize: 18 }} />, href: settings.instagram_url, label: "Instagram" },
     { icon: <WhatsAppIcon sx={{ fontSize: 18 }} />, href: `https://wa.me/${settings.whatsapp_number}`, label: "WhatsApp" },
-    { icon: <YouTubeIcon sx={{ fontSize: 18 }} />, href: "#", label: "YouTube" },
-  ];
+    settings.youtube_url && { icon: <YouTubeIcon sx={{ fontSize: 18 }} />, href: settings.youtube_url, label: "YouTube" },
+  ].filter(Boolean) as { icon: React.ReactNode; href: string; label: string }[];
 
   return (
     <footer className="relative mt-4 overflow-hidden bg-choco text-[#d8bfb6]">
@@ -74,7 +75,7 @@ export default function Footer({ settings }: { settings: Record<string, string> 
           <p className="mb-4 text-sm">Follow our daily bakes, behind-the-scenes &amp; offers</p>
           <div className="flex gap-2.5">
             {socials.map((s) => (
-              <a key={s.label} href={s.href} aria-label={s.label}
+              <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer"
                 className="grid h-[42px] w-[42px] place-items-center rounded-xl bg-white/10 text-[#e9cfc7] transition hover:-translate-y-1 hover:bg-pink hover:text-white">
                 {s.icon}
               </a>

@@ -78,7 +78,7 @@ export default function CustomPage() {
 
   if (done) {
     return (
-      <section className="py-20">
+      <section className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-xl px-6 text-center">
           <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 18 }} className="block text-7xl">🎉</motion.span>
           <h1 className="mt-4 font-display text-3xl font-extrabold text-choco">Custom Cake Request Received!</h1>
@@ -98,7 +98,7 @@ export default function CustomPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>Custom Cakes</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">Build Your <span className="font-script text-pink">Custom Cake</span></h1>
@@ -106,7 +106,7 @@ export default function CustomPage() {
         </div>
       </section>
 
-      <section className="py-14">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-3xl px-6">
           <Stepper activeStep={step} alternativeLabel sx={{ mb: 5, "& .MuiStepIcon-root": { color: "#f0ded7" }, "& .MuiStepIcon-root.Mui-active": { color: "#e63c64" }, "& .MuiStepIcon-root.Mui-completed": { color: "#e63c64" } }}>
             {STEPS.map((s) => <Step key={s}><StepLabel sx={{ "& .MuiStepLabel-label": { fontSize: 13 } }}>{s}</StepLabel></Step>)}

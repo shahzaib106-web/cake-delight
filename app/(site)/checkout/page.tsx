@@ -59,14 +59,14 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-14 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <Link href="/cart" className="hover:text-pink">Cart</Link> › <span>Checkout</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco">Checkout <span className="font-script text-pink">— almost there!</span></h1>
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto grid max-w-6xl items-start gap-8 px-6 lg:grid-cols-[1.5fr_1fr]">
           <form onSubmit={submit} className="space-y-5">
             <div className="rounded-3xl border border-line bg-white p-8 shadow-card">

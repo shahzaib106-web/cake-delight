@@ -23,7 +23,7 @@ function Inner() {
   }, [no]);
 
   return (
-    <section className="py-16">
+    <section className="py-10 sm:py-12">
       <div className="mx-auto max-w-2xl px-6 text-center">
         <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.1 }}
           className="mx-auto mb-5 grid h-[100px] w-[100px] place-items-center rounded-full bg-gradient-to-br from-[#3fae6a] to-[#7ed9a0] text-5xl text-white">✓</motion.span>

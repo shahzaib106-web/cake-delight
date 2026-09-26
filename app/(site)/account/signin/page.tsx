@@ -54,7 +54,7 @@ export default function SignInPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>My Account</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">
@@ -66,7 +66,7 @@ export default function SignInPage() {
         </div>
       </section>
 
-      <section className="py-14">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-md px-6">
           {ready && customer && (
             <div className="mb-6 rounded-3xl border border-line bg-white p-6 text-center shadow-card">

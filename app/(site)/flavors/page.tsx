@@ -13,14 +13,14 @@ export default function FlavorsPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>Flavors</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">Pick a <span className="font-script text-pink">Flavor</span></h1>
           <p className="mt-3 text-mut">Explore our delicious flavors — handcrafted fresh with premium ingredients</p>
         </div>
       </section>
-      <section className="py-14">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(255px,1fr))] gap-5">
             {(flavors || []).map((f, i) => (

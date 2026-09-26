@@ -13,7 +13,7 @@ export default function BestSellers({ products }: { products: Product[] }) {
   const list = cat === "all" ? products.filter((p) => p.bestseller) : products.filter((p) => p.category === cat);
 
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHead eyebrow="Customer Favorites" title={<>Our <span className="font-script text-pink">Best Sellers</span></>} sub="The most-loved cakes across Sahiwal — freshly baked every day" />
         <div className="mb-10 flex flex-wrap justify-center gap-2.5">

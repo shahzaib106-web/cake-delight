@@ -7,7 +7,7 @@ export default async function AboutPage() {
   const s = await getSettings();
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>About</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">Our <span className="font-script text-pink">Story</span></h1>
@@ -15,11 +15,11 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 lg:grid-cols-2">
           <Reveal className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/hero-cake.png" alt="Custom cake by Cake Delight" className="aspect-[1/0.95] w-full rounded-3xl border-10 border-white object-cover shadow-pop" />
+            <img src="/img/hero-cake.jpg" alt="Custom cake by Cake Delight" loading="lazy" decoding="async" className="aspect-[1/0.95] w-full rounded-3xl border-10 border-white object-cover shadow-pop" />
             <div className="absolute -right-3.5 -top-4 grid h-[120px] w-[120px] rotate-6 place-items-center rounded-full bg-pink text-center text-white shadow-pop">
               <span><b className="block font-display text-3xl leading-none">7+</b><small className="text-2xs uppercase tracking-wider">Years of baking</small></span>
             </div>
@@ -41,7 +41,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-blush py-16">
+      <section className="bg-blush py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHead eyebrow="Why Choose Us" title="The Cake Delight Promise" />
           <div className="grid gap-5 md:grid-cols-3">
@@ -62,7 +62,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <SectionHead eyebrow="Milestones" title="Sweet Numbers" />
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">

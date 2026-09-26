@@ -523,6 +523,9 @@ export const DEFAULT_SETTINGS: Record<string, string> = {
   whatsapp_number: "923001234567",
   footer_tagline: "Beautifully designed, deliciously made — personalized cakes for birthdays, weddings, anniversaries and all your special celebrations in Sahiwal.",
   footer_note: "Cash on Delivery · Same-Day Delivery in Sahiwal",
+  facebook_url: "",
+  instagram_url: "",
+  youtube_url: "",
   about_sub: "From a home kitchen in Sahiwal to your happiest moments",
   about_heading: "Baking Happiness Into Every Celebration",
   about_p1: "Cake Delight began as a small home bakery with one simple belief — every celebration deserves a cake that tastes as beautiful as it looks. Today, we're proud to be one of Sahiwal's most-loved custom cake shops, crafting 500+ cakes a year for birthdays, weddings, anniversaries and every happy moment in between.",
@@ -531,16 +534,23 @@ export const DEFAULT_SETTINGS: Record<string, string> = {
 
 export type SiteSettings = Record<string, string>;
 
+/* tiny in-memory cache so page renders never block on Supabase latency */
+let _settingsCache: { data: SiteSettings; at: number } | null = null;
+const SETTINGS_TTL = 30_000;
+
 export async function getSettings(): Promise<SiteSettings> {
+  if (_settingsCache && Date.now() - _settingsCache.at < SETTINGS_TTL) return _settingsCache.data;
+  let merged: SiteSettings = { ...DEFAULT_SETTINGS };
   if (usingSupabase) {
     try {
       const { data, error } = await supa().from("site_settings").select("key,value");
-      if (!error && data) return { ...DEFAULT_SETTINGS, ...Object.fromEntries(data.map((r: any) => [r.key, String(r.value ?? "")])) };
+      if (!error && data) merged = { ...DEFAULT_SETTINGS, ...Object.fromEntries(data.map((r: any) => [r.key, String(r.value ?? "")])) };
     } catch { /* table missing → defaults */ }
   } else {
-    try { const db = readDB(); if (db.settings) return { ...DEFAULT_SETTINGS, ...db.settings }; } catch { /* ignore */ }
+    try { const db = readDB(); if (db.settings) merged = { ...DEFAULT_SETTINGS, ...db.settings }; } catch { /* ignore */ }
   }
-  return { ...DEFAULT_SETTINGS };
+  _settingsCache = { data: merged, at: Date.now() };
+  return merged;
 }
 
 /** true when the site_settings table exists and is writable (admin diagnostics) */
@@ -561,4 +571,5 @@ export async function saveSettings(patch: Record<string, string>): Promise<void>
     db.settings = { ...(db.settings || {}), ...clean };
     writeDB(db);
   }
+  _settingsCache = null; // invalidate so admin edits are live immediately
 }

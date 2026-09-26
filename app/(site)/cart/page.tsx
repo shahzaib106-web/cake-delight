@@ -13,14 +13,14 @@ export default function CartPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-blush to-cream py-14 text-center">
+      <section className="bg-gradient-to-b from-blush to-cream py-12 sm:py-14 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>Cart</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco">Your <span className="font-script text-pink">Cart</span></h1>
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-6">
           {!cart.ready ? (
             <div className="py-16 text-center text-mut">Loading your cart…</div>
