@@ -129,7 +129,7 @@ export default function CustomPage() {
                       ))}
                     </div>
                     <div className="mt-6">
-                      <TextField label="Describe your dream design *" multiline minRows={3} value={design}
+                      <TextField label="Your dream design *" multiline minRows={3} value={design}
                         onChange={(e) => { setDesign(e.target.value); if (designError && e.target.value.trim().length >= 8) setDesignError(false); }}
                         error={designError}
                         helperText={designError ? "A few more words help our designer create your dream cake (min 8 characters)" : `${design.length} / 800`}

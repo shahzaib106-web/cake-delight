@@ -100,12 +100,12 @@ export default function ProductView({ detail, flavors }: { detail: { product: Pr
           </motion.div>
         </div>
 
-        {/* tabs */}
+        {/* tabs — equal thirds so they never overflow on small phones */}
         <div className="mt-16">
-          <div className="flex gap-2 border-b-[1.5px] border-line">
+          <div className="grid grid-cols-3 border-b-[1.5px] border-line">
             {[["desc", "Description"], ["ing", "Ingredients"], ["del", "Delivery & Care"]].map(([k, t]) => (
               <button key={k} onClick={() => setTab(k)}
-                className={`-mb-[1.5px] border-b-[2.5px] px-5 py-3 text-sm font-semibold transition ${tab === k ? "border-pink text-pink" : "border-transparent text-mut hover:text-choco"}`}>
+                className={`-mb-[1.5px] border-b-[2.5px] px-1 py-3 text-center text-xs font-semibold transition sm:px-5 sm:text-sm ${tab === k ? "border-pink text-pink" : "border-transparent text-mut hover:text-choco"}`}>
                 {t}
               </button>
             ))}

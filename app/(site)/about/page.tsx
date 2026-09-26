@@ -20,7 +20,7 @@ export default async function AboutPage() {
           <Reveal className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/img/hero-cake.jpg" alt="Custom cake by Cake Delight" loading="lazy" decoding="async" className="aspect-[1/0.95] w-full rounded-3xl border-10 border-white object-cover shadow-pop" />
-            <div className="absolute -right-3.5 -top-4 grid h-[120px] w-[120px] rotate-6 place-items-center rounded-full bg-pink text-center text-white shadow-pop">
+            <div className="absolute -right-2 -top-4 grid h-[110px] w-[110px] rotate-6 place-items-center rounded-full bg-pink text-center text-white shadow-pop sm:-right-3.5 sm:h-[120px] sm:w-[120px]">
               <span><b className="block font-display text-3xl leading-none">7+</b><small className="text-2xs uppercase tracking-wider">Years of baking</small></span>
             </div>
             <div className="absolute -left-5 bottom-6 flex items-center gap-3 rounded-2xl bg-white p-3.5 px-5 shadow-pop">

@@ -104,7 +104,7 @@ export default async function Home() {
       <section className="bg-cream py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal>
-            <div className="relative grid gap-12 overflow-hidden rounded-[32px] bg-gradient-to-br from-choco to-choco2 px-8 py-10 text-[#f4e3dc] md:px-14 md:py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+            <div className="relative grid gap-12 overflow-hidden rounded-[32px] bg-gradient-to-br from-choco to-choco2 px-5 py-10 text-[#f4e3dc] sm:px-8 md:px-14 md:py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
               <i className="absolute -right-24 -top-24 h-[300px] w-[300px] rounded-full border-[34px] border-pink/[0.16]" />
               <i className="absolute -bottom-28 -left-16 h-[260px] w-[260px] rounded-full bg-pink/[0.09]" />
               <div className="relative z-10">
@@ -131,11 +131,11 @@ export default async function Home() {
                   Order a Custom Cake →
                 </Link>
               </div>
-              <div className="relative z-10 grid grid-cols-2 gap-4">
-                {[["500+", "Happy Customers in Sahiwal"], ["4.9★", "Average Rating"], ["100+", "Custom Designs Made"], ["Same-Day", "Delivery Available"]].map(([b, s], i) => (
+              <div className="relative z-10 grid grid-cols-2 gap-3 sm:gap-4">
+                {[["500+", "Happy Customers in Sahiwal"], ["4.9★", "Average Rating"], ["100+", "Custom Designs Made"], ["Same Day", "Delivery Available"]].map(([b, s], i) => (
                   <Reveal key={b} delay={i * 0.1}>
-                    <div className="rounded-2xl border border-white/[0.13] bg-white/[0.07] p-5 text-center backdrop-blur transition hover:-translate-y-1 hover:bg-white/[0.12]">
-                      <b className="block font-display text-3xl text-white">{b}</b>
+                    <div className="h-full rounded-2xl border border-white/[0.13] bg-white/[0.07] p-4 text-center backdrop-blur transition hover:-translate-y-1 hover:bg-white/[0.12] sm:p-5">
+                      <b className="block font-display text-2xl leading-tight text-white sm:text-3xl">{b}</b>
                       <small className="text-xs font-medium text-[#e8cdc4]">{s}</small>
                     </div>
                   </Reveal>
@@ -178,9 +178,9 @@ export default async function Home() {
             <i className="absolute -bottom-20 -right-14 h-52 w-52 rounded-full bg-gold/[0.09]" />
             <h2 className="relative font-display text-3xl font-bold text-choco sm:text-4xl">Ready to order your <Script>dream cake?</Script></h2>
             <p className="relative mt-2.5 text-mut">Call us, WhatsApp us, or build your custom cake online in minutes.</p>
-            <div className="relative mt-7 flex flex-wrap justify-center gap-3.5">
-              <Link href="/custom" className="rounded-full bg-pink px-8 py-4 font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">Build Custom Cake</Link>
-              <a href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-choco px-8 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16]">💬 WhatsApp {settings.contact_phone}</a>
+            <div className="relative mt-7 flex flex-col items-stretch gap-3.5 sm:flex-row sm:justify-center">
+              <Link href="/custom" className="inline-flex items-center justify-center rounded-full bg-pink px-6 py-4 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2 sm:w-auto sm:px-8 sm:text-base">Build Custom Cake</Link>
+              <a href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-choco px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16] sm:w-auto sm:px-8 sm:text-base">💬 WhatsApp {settings.contact_phone}</a>
             </div>
           </div>
         </Reveal>
