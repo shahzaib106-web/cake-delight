@@ -52,9 +52,9 @@ export default function AdminTestimonials() {
                 <td className="px-4 py-3"><Switch checked={!!t.active} size="small" onChange={() => api(`/api/admin/testimonials/${t.id}`, { method: "PATCH", body: { active: !t.active } }).then(load)} /></td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1.5">
-                    <button onClick={() => setEdit(t)} className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-pinkfaint">✏️</button>
+                    <button onClick={() => setEdit(t)} title="Edit" className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-pinkfaint">✏️</button>
                     <button onClick={() => ask("Delete testimonial?", "It will be removed from the website homepage.", async () => { await api(`/api/admin/testimonials/${t.id}`, { method: "DELETE" }); load(); })}
-                      className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-[#fdeaea]">🗑</button>
+                      title="Delete" className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-[#fdeaea]">🗑</button>
                   </div>
                 </td>
               </tr>

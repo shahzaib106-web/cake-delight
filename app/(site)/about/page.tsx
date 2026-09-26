@@ -1,15 +1,17 @@
-/** About page */
+/** About page — content editable via admin → Site Settings */
 import Link from "next/link";
 import { Reveal, SectionHead } from "@/components/ui";
+import { getSettings } from "@/lib/store";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const s = await getSettings();
   return (
     <>
       <section className="bg-gradient-to-b from-blush to-cream py-16 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <nav className="mb-4 text-sm text-mut"><Link href="/" className="hover:text-pink">Home</Link> › <span>About</span></nav>
           <h1 className="font-display text-4xl font-extrabold text-choco sm:text-5xl">Our <span className="font-script text-pink">Story</span></h1>
-          <p className="mt-3 text-mut">From a home kitchen in Sahiwal to your happiest moments</p>
+          <p className="mt-3 text-mut">{s.about_sub}</p>
         </div>
       </section>
 
@@ -28,9 +30,9 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={0.15}>
             <span className="mb-3 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-pink"><i className="h-px w-7 bg-pink/60" /> About Cake Delight <i className="h-px w-7 bg-pink/60" /></span>
-            <h2 className="font-display text-3xl font-bold text-choco sm:text-[38px]">Baking Happiness Into Every <span className="font-script text-pink">Celebration</span></h2>
-            <p className="mt-5 text-mut">Cake Delight began as a small home bakery with one simple belief — every celebration deserves a cake that tastes as beautiful as it looks. Today, we&apos;re proud to be one of Sahiwal&apos;s most-loved custom cake shops, crafting 500+ cakes a year for birthdays, weddings, anniversaries and every happy moment in between.</p>
-            <p className="mt-4 text-mut">Every cake is baked fresh to order with premium ingredients — Belgian chocolate, fresh dairy butter and farm eggs. No shortcuts, no compromises. Just handcrafted goodness, delivered with a smile.</p>
+            <h2 className="font-display text-3xl font-bold text-choco sm:text-[38px]">{s.about_heading.replace(/\s(\S+)$/, "")} <span className="font-script text-pink">{s.about_heading.split(" ").slice(-1)[0]}</span></h2>
+            <p className="mt-5 text-mut">{s.about_p1}</p>
+            <p className="mt-4 text-mut">{s.about_p2}</p>
             <div className="mt-7 flex flex-wrap gap-3.5">
               <Link href="/gallery" className="rounded-full bg-pink px-7 py-3 font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">View Our Cakes</Link>
               <Link href="/contact" className="rounded-full border-2 border-pink px-7 py-3 font-semibold text-pink transition hover:bg-pink hover:text-white">Get in Touch</Link>

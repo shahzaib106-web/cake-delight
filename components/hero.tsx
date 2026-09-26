@@ -1,5 +1,5 @@
 "use client";
-/** Animated hero — left copy, right visual with floating stat cards */
+/** Animated hero — left copy (all text admin-editable), right visual with floating stat cards */
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -9,7 +9,9 @@ const fadeUp = (d: number) => ({
   transition: { duration: 0.6, delay: d, ease: [0.21, 0.65, 0.35, 1] as const },
 });
 
-export default function Hero() {
+export default function Hero({ settings }: { settings: Record<string, string> }) {
+  const points = String(settings.hero_points || "").split("|").map((s) => s.trim()).filter(Boolean);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-cream to-cream2">
       <i className="absolute -right-32 -top-36 h-[480px] w-[480px] rounded-full bg-pinksoft/50 blur-3xl" />
@@ -18,14 +20,14 @@ export default function Hero() {
         <div>
           <motion.span {...fadeUp(0)}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-line2 bg-white px-4.5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-pink shadow-card">
-            <i className="h-[7px] w-[7px] animate-pulse rounded-full bg-pink" /> Custom Cakes in Sahiwal
+            <i className="h-[7px] w-[7px] animate-pulse rounded-full bg-pink" /> {settings.hero_badge}
           </motion.span>
           <motion.h1 {...fadeUp(0.1)} className="font-display text-[clamp(38px,4.6vw,60px)] font-extrabold leading-[1.13] text-choco">
-            Custom Cakes Crafted
-            <br /> for Your <span className="font-script inline-block -rotate-2 text-[1.16em] text-pink">Special Moments!</span>
+            {settings.hero_title_1}
+            <br /> for Your <span className="font-script inline-block -rotate-2 text-[1.16em] text-pink">{settings.hero_title_2}</span>
           </motion.h1>
           <motion.p {...fadeUp(0.2)} className="mt-5 max-w-[520px] text-md text-mut">
-            Beautifully designed, deliciously made — personalized cakes for birthdays, weddings, anniversaries and all your special celebrations in Sahiwal.
+            {settings.hero_sub}
           </motion.p>
           <motion.div {...fadeUp(0.3)} className="mt-7 flex flex-wrap items-center gap-5">
             <Link href="/gallery"
@@ -38,7 +40,7 @@ export default function Hero() {
             </div>
           </motion.div>
           <motion.ul {...fadeUp(0.4)} className="mt-9 flex flex-wrap gap-6 text-sm font-medium text-choco">
-            {["100% Fresh Baked", "Premium Ingredients", "Same-Day Delivery"].map((t) => (
+            {points.map((t) => (
               <li key={t} className="flex items-center gap-2"><span className="text-pink">✔</span> {t}</li>
             ))}
           </motion.ul>

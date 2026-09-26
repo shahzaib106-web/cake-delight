@@ -6,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import { useAdmin } from "@/components/admin-kit";
 
 const NAV = [
-  ["Main", [["📊", "Overview", "/admin"]]],
+  ["Main", [["📊", "Overview", "/admin"], ["⚙️", "Site Settings", "/admin/settings"]]],
   ["Orders", [
     ["🧾", "Orders", "/admin/orders"],
     ["🎨", "Custom Requests", "/admin/custom-orders"],

@@ -15,7 +15,7 @@ const SUPA_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 export const usingSupabase = !!(SUPA_URL && SUPA_SERVICE);
 
 let _supa: SupabaseClient | null = null;
-const supa = () => {
+export const supa = () => {
   if (!_supa) _supa = createClient(SUPA_URL, SUPA_SERVICE, { auth: { persistSession: false } });
   return _supa!;
 };
@@ -58,6 +58,7 @@ interface DB {
   order_items: OrderItem[];
   custom_orders: CustomOrder[];
   messages: Message[];
+  settings?: Record<string, string>;
 }
 const DB_PATH = path.join(process.cwd(), "data", "db.json");
 
@@ -487,4 +488,61 @@ export async function adminStats() {
     recentOrders: orders.slice(0, 6),
     recentMessages: messages.slice(0, 5),
   };
+}
+
+/* ----------------------------- site settings ------------------------------ */
+/** Editable site content — admin → Settings. Values fall back to these defaults. */
+export const DEFAULT_SETTINGS: Record<string, string> = {
+  announcement: "Custom cakes for birthdays, weddings & special events in Sahiwal",
+  announcement_phone: "0300-1234567",
+  hero_badge: "Custom Cakes in Sahiwal",
+  hero_title_1: "Custom Cakes Crafted",
+  hero_title_2: "Special Moments!",
+  hero_sub: "Beautifully designed, deliciously made — personalized cakes for birthdays, weddings, anniversaries and all your special celebrations in Sahiwal.",
+  hero_points: "100% Fresh Baked|Premium Ingredients|Same-Day Delivery",
+  contact_address: "Main Boulevard, Farooq Colony, Sahiwal, Punjab 57000",
+  contact_phone: "0300-1234567",
+  contact_email: "hello@cakedelight.pk",
+  contact_hours: "Monday – Sunday · 9:00 AM – 10:00 PM",
+  whatsapp_number: "923001234567",
+  footer_tagline: "Beautifully designed, deliciously made — personalized cakes for birthdays, weddings, anniversaries and all your special celebrations in Sahiwal.",
+  footer_note: "Cash on Delivery · Same-Day Delivery in Sahiwal",
+  about_sub: "From a home kitchen in Sahiwal to your happiest moments",
+  about_heading: "Baking Happiness Into Every Celebration",
+  about_p1: "Cake Delight began as a small home bakery with one simple belief — every celebration deserves a cake that tastes as beautiful as it looks. Today, we're proud to be one of Sahiwal's most-loved custom cake shops, crafting 500+ cakes a year for birthdays, weddings, anniversaries and every happy moment in between.",
+  about_p2: "Every cake is baked fresh to order with premium ingredients — Belgian chocolate, fresh dairy butter and farm eggs. No shortcuts, no compromises. Just handcrafted goodness, delivered with a smile.",
+};
+
+export type SiteSettings = Record<string, string>;
+
+export async function getSettings(): Promise<SiteSettings> {
+  if (usingSupabase) {
+    try {
+      const { data, error } = await supa().from("site_settings").select("key,value");
+      if (!error && data) return { ...DEFAULT_SETTINGS, ...Object.fromEntries(data.map((r: any) => [r.key, String(r.value ?? "")])) };
+    } catch { /* table missing → defaults */ }
+  } else {
+    try { const db = readDB(); if (db.settings) return { ...DEFAULT_SETTINGS, ...db.settings }; } catch { /* ignore */ }
+  }
+  return { ...DEFAULT_SETTINGS };
+}
+
+/** true when the site_settings table exists and is writable (admin diagnostics) */
+export async function settingsReady(): Promise<boolean> {
+  if (!usingSupabase) return true;
+  try { const { error } = await supa().from("site_settings").select("key").limit(1); return !error; } catch { return false; }
+}
+
+export async function saveSettings(patch: Record<string, string>): Promise<void> {
+  const clean: Record<string, string> = {};
+  for (const k of Object.keys(DEFAULT_SETTINGS)) if (patch[k] !== undefined) clean[k] = String(patch[k] ?? "").slice(0, 2000);
+  if (!Object.keys(clean).length) return;
+  if (usingSupabase) {
+    const { error } = await supa().from("site_settings").upsert(Object.entries(clean).map(([key, value]) => ({ key, value })), { onConflict: "key" });
+    if (error) throw new Error(/does not exist|Could not find the table|schema cache/i.test(error.message) ? "The site_settings table is missing — run the SQL shown below (or in supabase/schema.sql) in the Supabase SQL Editor first." : error.message);
+  } else {
+    const db = readDB();
+    db.settings = { ...(db.settings || {}), ...clean };
+    writeDB(db);
+  }
 }

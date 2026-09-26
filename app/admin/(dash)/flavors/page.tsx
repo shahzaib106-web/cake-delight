@@ -51,9 +51,9 @@ export default function AdminFlavors() {
                 <td className="px-4 py-3"><Switch checked={!!f.active} size="small" onChange={() => api(`/api/admin/flavors/${f.id}`, { method: "PATCH", body: { active: !f.active } }).then(load)} /></td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1.5">
-                    <button onClick={() => setEdit(f)} className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-pinkfaint">✏️</button>
+                    <button onClick={() => setEdit(f)} title="Edit" className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-pinkfaint">✏️</button>
                     <button onClick={() => ask("Delete flavor?", "It will be removed from the custom builder & product pages.", async () => { await api(`/api/admin/flavors/${f.id}`, { method: "DELETE" }); load(); })}
-                      className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-[#fdeaea]">🗑</button>
+                      title="Delete" className="grid h-8 w-8 place-items-center rounded-lg bg-cream text-sm transition hover:bg-[#fdeaea]">🗑</button>
                   </div>
                 </td>
               </tr>
@@ -73,7 +73,7 @@ export default function AdminFlavors() {
                 <TextField label="Name *" required value={edit.name || ""} onChange={(e) => setEdit({ ...edit, name: e.target.value })} />
                 <TextField label="Description" value={edit.description || ""} onChange={(e) => setEdit({ ...edit, description: e.target.value })} />
                 <TextField select label="Tag" value={edit.tag || "classic"} onChange={(e) => setEdit({ ...edit, tag: e.target.value })}>
-                  {["classic", "premium", "fruity"].map((t) => <MenuItem key={t}>{t}</MenuItem>)}
+                  {["classic", "premium", "fruity"].map((t) => <MenuItem key={t} value={t}>{t}</MenuItem>)}
                 </TextField>
                 <Button variant="contained" onClick={save}>{edit.id ? "Save Flavor" : "Add Flavor"}</Button>
               </div>

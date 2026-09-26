@@ -15,10 +15,11 @@ export async function POST(req: NextRequest) {
     if (!/\.(jpe?g|png|webp|gif)$/i.test(file.name)) return NextResponse.json({ error: "Only jpg/png/webp/gif allowed" }, { status: 400 });
 
     if (usingSupabase) {
-      const { SUPA_URL, SUPA_SERVICE } = process.env;
+      const SUPA_URL = process.env.SUPABASE_URL!;
+      const SUPA_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY!;
       const buf = Buffer.from(await file.arrayBuffer());
-      const res = await fetch(`${SUPA_URL}/storage/v1/object/product-images/${file.name}`, {
-        method: "POST", headers: { Authorization: `Bearer ${SUPA_SERVICE}`, "Content-Type": file.type || "image/jpeg" }, body: buf,
+      const res = await fetch(`${SUPA_URL}/storage/v1/object/product-images/${encodeURIComponent(file.name)}`, {
+        method: "POST", headers: { Authorization: `Bearer ${SUPA_SERVICE}`, "Content-Type": file.type || "image/jpeg", "x-upsert": "true" }, body: buf,
       });
       if (!res.ok) return NextResponse.json({ error: "Supabase storage upload failed (create a public 'product-images' bucket)" }, { status: 500 });
       return NextResponse.json({ path: `${SUPA_URL}/storage/v1/object/public/product-images/${file.name}` });

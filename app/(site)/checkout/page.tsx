@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useCart } from "@/components/cart";
+import { useCustomer } from "@/components/customer";
 import { useToast } from "@/components/toast";
 import { rs } from "@/lib/types";
 
@@ -29,6 +30,12 @@ export default function CheckoutPage() {
   }, [placed, cart.ready, cart.items.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = (k: string) => (e: any) => setF((s) => ({ ...s, [k]: e.target.value }));
+
+  // prefill from signed-in customer
+  const { customer } = useCustomer();
+  useEffect(() => {
+    if (customer) setF((s) => ({ ...s, name: s.name || customer.name, email: s.email || customer.email }));
+  }, [customer]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

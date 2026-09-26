@@ -145,3 +145,14 @@ insert into testimonials (name, location, text, rating) values
 ('Usman Ali','Sahiwal','From ordering to delivery, everything was smooth. The cake was fresh and delicious and the service was even better. Highly recommended!',5),
 ('Ayesha Malik','Sahiwal','The custom cake for my daughter''s birthday was exactly what I imagined — beautiful design and amazing taste. Will order again for sure!',5),
 ('Sara & Bilal','Sahiwal','Our anniversary cake was a big hit! So creative, delivered on time and in perfect condition. Cake Delight never disappoints.',5);
+
+-- ────────────────────────────────────────────────────────────
+-- Site settings — editable website content (admin → Site Settings)
+-- OPTIONAL: without this table the site simply uses built-in defaults.
+-- ────────────────────────────────────────────────────────────
+create table if not exists site_settings (
+  key text primary key,
+  value text not null default '',
+  updated_at timestamptz default now()
+);
+alter table site_settings enable row level security;

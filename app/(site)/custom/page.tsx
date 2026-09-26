@@ -13,6 +13,7 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useToast } from "@/components/toast";
+import { useCustomer } from "@/components/customer";
 import type { Flavor } from "@/lib/types";
 
 const OCCASIONS = ["🎂 Birthday", "💍 Wedding", "👶 Kids Party", "❤️ Anniversary", "🎓 Graduation", "🏢 Corporate"];
@@ -38,6 +39,11 @@ export default function CustomPage() {
   const toast = useToast();
 
   useEffect(() => { fetch("/api/flavors").then((r) => r.json()).then(setFlavors).catch(() => {}); }, []);
+  // prefill contact details from signed-in customer
+  const { customer } = useCustomer();
+  useEffect(() => {
+    if (customer) { setName((v) => v || customer.name); setEmail((v) => v || customer.email); }
+  }, [customer]);
 
   const [designError, setDesignError] = useState(false);
 

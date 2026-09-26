@@ -1,5 +1,5 @@
 "use client";
-/** Site footer — dark chocolate, 4 columns */
+/** Site footer — dark chocolate, 4 columns. All contact content comes from site settings (admin-editable). */
 import Link from "next/link";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -11,23 +11,22 @@ import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
 import { Logo } from "./ui";
 
-const socials = [
-  { icon: <FacebookRoundedIcon sx={{ fontSize: 18 }} />, href: "#", label: "Facebook" },
-  { icon: <InstagramIcon sx={{ fontSize: 18 }} />, href: "#", label: "Instagram" },
-  { icon: <WhatsAppIcon sx={{ fontSize: 18 }} />, href: "https://wa.me/923001234567", label: "WhatsApp" },
-  { icon: <YouTubeIcon sx={{ fontSize: 18 }} />, href: "#", label: "YouTube" },
-];
+export default function Footer({ settings }: { settings: Record<string, string> }) {
+  const tel = String(settings.contact_phone || "").replace(/[^\d+]/g, "");
+  const socials = [
+    { icon: <FacebookRoundedIcon sx={{ fontSize: 18 }} />, href: "#", label: "Facebook" },
+    { icon: <InstagramIcon sx={{ fontSize: 18 }} />, href: "#", label: "Instagram" },
+    { icon: <WhatsAppIcon sx={{ fontSize: 18 }} />, href: `https://wa.me/${settings.whatsapp_number}`, label: "WhatsApp" },
+    { icon: <YouTubeIcon sx={{ fontSize: 18 }} />, href: "#", label: "YouTube" },
+  ];
 
-export default function Footer() {
   return (
     <footer className="relative mt-4 overflow-hidden bg-choco text-[#d8bfb6]">
       <i className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pink to-transparent" />
       <div className="mx-auto grid max-w-6xl gap-11 px-6 py-16 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1.15fr_1fr]">
         <div>
           <Logo light />
-          <p className="mt-4 max-w-[300px] text-sm leading-relaxed">
-            Beautifully designed, deliciously made — personalized cakes for birthdays, weddings, anniversaries and all your special celebrations in Sahiwal.
-          </p>
+          <p className="mt-4 max-w-[300px] text-sm leading-relaxed">{settings.footer_tagline}</p>
           <div className="mt-5 flex gap-2.5">
             {socials.map((s) => (
               <a key={s.label} href={s.href} aria-label={s.label}
@@ -40,7 +39,7 @@ export default function Footer() {
         <div>
           <h4 className="mb-5 font-display text-md font-bold text-white">Quick Links</h4>
           <ul className="space-y-2.5 text-sm">
-            {[["Home", "/"], ["Custom Cakes", "/custom"], ["Gallery", "/gallery"], ["Flavors", "/flavors"], ["About", "/about"], ["Contact", "/contact"]].map(([l, h]) => (
+            {[["Home", "/"], ["Custom Cakes", "/custom"], ["Gallery", "/gallery"], ["Flavors", "/flavors"], ["About", "/about"], ["Contact", "/contact"], ["My Account", "/account/orders"]].map(([l, h]) => (
               <li key={h}>
                 <Link href={h} className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white">
                   <span className="font-bold text-pink">›</span> {l}
@@ -54,19 +53,19 @@ export default function Footer() {
           <ul className="space-y-4 text-sm">
             <li className="flex items-start gap-3">
               <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-lg bg-pink/20 text-[#f7a8bd]"><PlaceRoundedIcon sx={{ fontSize: 16 }} /></span>
-              <span><b className="font-semibold text-white">Visit Us</b><br />Main Boulevard, Farooq Colony, Sahiwal</span>
+              <span><b className="font-semibold text-white">Visit Us</b><br />{settings.contact_address}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-lg bg-pink/20 text-[#f7a8bd]"><LocalPhoneRoundedIcon sx={{ fontSize: 16 }} /></span>
-              <span><b className="font-semibold text-white">Call / WhatsApp</b><br /><a href="tel:03001234567" className="hover:text-white">0300-1234567</a></span>
+              <span><b className="font-semibold text-white">Call / WhatsApp</b><br /><a href={`tel:${tel}`} className="hover:text-white">{settings.contact_phone}</a></span>
             </li>
             <li className="flex items-start gap-3">
               <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-lg bg-pink/20 text-[#f7a8bd]"><MailRoundedIcon sx={{ fontSize: 16 }} /></span>
-              <span><b className="font-semibold text-white">Email</b><br /><a href="mailto:hello@cakedelight.pk" className="hover:text-white">hello@cakedelight.pk</a></span>
+              <span><b className="font-semibold text-white">Email</b><br /><a href={`mailto:${settings.contact_email}`} className="hover:text-white">{settings.contact_email}</a></span>
             </li>
             <li className="flex items-start gap-3">
               <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-lg bg-pink/20 text-[#f7a8bd]"><ScheduleRoundedIcon sx={{ fontSize: 16 }} /></span>
-              <span><b className="font-semibold text-white">Opening Hours</b><br />Mon – Sun · 9:00 AM – 10:00 PM</span>
+              <span><b className="font-semibold text-white">Opening Hours</b><br />{settings.contact_hours}</span>
             </li>
           </ul>
         </div>
@@ -89,7 +88,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3.5 px-6 py-5 text-xs max-sm:flex-col max-sm:justify-center max-sm:text-center">
           <div>© 2026 <b className="text-[#f7a8bd]">Cake Delight</b> — Made with <span className="text-pink">♥</span> in Sahiwal</div>
-          <div>Cash on Delivery · Same-Day Delivery in Sahiwal</div>
+          <div>{settings.footer_note}</div>
         </div>
       </div>
     </footer>

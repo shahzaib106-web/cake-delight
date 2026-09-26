@@ -3,7 +3,7 @@ import Link from "next/link";
 import Hero from "@/components/hero";
 import BestSellers from "@/components/best-sellers";
 import { Reveal, SectionHead, Script } from "@/components/ui";
-import { listProducts, listTestimonials } from "@/lib/store";
+import { listProducts, listTestimonials, getSettings } from "@/lib/store";
 
 const CATS_META = [
   ["birthday", "Birthday Cakes", "Make birthdays extra special"],
@@ -21,11 +21,11 @@ const TRUST = [
 ];
 
 export default async function Home() {
-  const [products, testimonials] = await Promise.all([listProducts({}), listTestimonials()]);
+  const [products, testimonials, settings] = await Promise.all([listProducts({}), listTestimonials(), getSettings()]);
 
   return (
     <>
-      <Hero />
+      <Hero settings={settings} />
 
       {/* trust strip */}
       <section className="relative z-20 -mt-9">
@@ -177,7 +177,7 @@ export default async function Home() {
           <p className="mt-2.5 text-mut">Call us, WhatsApp us, or build your custom cake online in minutes.</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3.5">
             <Link href="/custom" className="rounded-full bg-pink px-8 py-4 font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">Build Custom Cake</Link>
-            <a href="https://wa.me/923001234567" className="rounded-full bg-choco px-8 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16]">💬 WhatsApp 0300-1234567</a>
+            <a href={`https://wa.me/${settings.whatsapp_number}`} className="rounded-full bg-choco px-8 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2b1a16]">💬 WhatsApp {settings.contact_phone}</a>
           </div>
         </Reveal>
       </section>

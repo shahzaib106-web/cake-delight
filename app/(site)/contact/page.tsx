@@ -1,6 +1,6 @@
 "use client";
-/** Contact page — info cards + form */
-import { useState } from "react";
+/** Contact page — info cards (admin-editable) + form */
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,20 +8,38 @@ import MenuItem from "@mui/material/MenuItem";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { Reveal } from "@/components/ui";
 import { useToast } from "@/components/toast";
-
-const INFO = [
-  ["📍", "Visit Our Shop", "Main Boulevard, Farooq Colony, Sahiwal, Punjab 57000"],
-  ["📞", "Call / WhatsApp", "0300-1234567", "tel:03001234567"],
-  ["✉️", "Email Us", "hello@cakedelight.pk", "mailto:hello@cakedelight.pk"],
-  ["🕘", "Opening Hours", "Monday – Sunday · 9:00 AM – 10:00 PM"],
-];
+import { useCustomer } from "@/components/customer";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "General Question", message: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [info, setInfo] = useState<{ icon: string; title: string; value: string; href?: string }[]>([
+    { icon: "📍", title: "Visit Our Shop", value: "Main Boulevard, Farooq Colony, Sahiwal, Punjab 57000" },
+    { icon: "📞", title: "Call / WhatsApp", value: "0300-1234567", href: "tel:03001234567" },
+    { icon: "✉️", title: "Email Us", value: "hello@cakedelight.pk", href: "mailto:hello@cakedelight.pk" },
+    { icon: "🕘", title: "Opening Hours", value: "Monday – Sunday · 9:00 AM – 10:00 PM" },
+  ]);
+  const { customer } = useCustomer();
   const toast = useToast();
   const set = (k: string) => (e: any) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  useEffect(() => {
+    fetch("/api/settings").then((r) => r.json()).then((s: Record<string, string>) => {
+      const tel = String(s.contact_phone || "").replace(/[^\d+]/g, "");
+      setInfo([
+        { icon: "📍", title: "Visit Our Shop", value: s.contact_address },
+        { icon: "📞", title: "Call / WhatsApp", value: s.contact_phone, href: `tel:${tel}` },
+        { icon: "✉️", title: "Email Us", value: s.contact_email, href: `mailto:${s.contact_email}` },
+        { icon: "🕘", title: "Opening Hours", value: s.contact_hours },
+      ]);
+    }).catch(() => {});
+  }, []);
+
+  // prefill from signed-in customer
+  useEffect(() => {
+    if (customer) setForm((f) => ({ ...f, name: f.name || customer.name, email: f.email || customer.email }));
+  }, [customer]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,12 +68,12 @@ export default function ContactPage() {
       <section className="py-14">
         <div className="mx-auto grid max-w-6xl items-start gap-8 px-6 lg:grid-cols-[1fr_1.25fr]">
           <div className="space-y-4">
-            {INFO.map(([em, t, v, href], i) => (
-              <Reveal key={t} delay={i * 0.07}>
+            {info.map((c, i) => (
+              <Reveal key={c.title} delay={i * 0.07}>
                 <div className="flex items-center gap-4 rounded-3xl border border-line bg-white p-6 shadow-card transition hover:translate-x-1.5 hover:shadow-soft">
-                  <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-pinkfaint to-pinksoft text-2xl">{em}</span>
-                  <div><b className="block text-base text-choco">{t}</b>
-                    {href ? <a href={href} className="text-sm text-mut hover:text-pink">{v}</a> : <p className="text-sm text-mut">{v}</p>}
+                  <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-pinkfaint to-pinksoft text-2xl">{c.icon}</span>
+                  <div><b className="block text-base text-choco">{c.title}</b>
+                    {c.href ? <a href={c.href} className="text-sm text-mut hover:text-pink">{c.value}</a> : <p className="text-sm text-mut">{c.value}</p>}
                   </div>
                 </div>
               </Reveal>
@@ -76,7 +94,7 @@ export default function ContactPage() {
                 <TextField label="Phone / WhatsApp" value={form.phone} onChange={set("phone")} placeholder="03XX-XXXXXXX" />
                 <TextField type="email" label="Email" value={form.email} onChange={set("email")} placeholder="you@example.com" />
                 <TextField select label="Subject" value={form.subject} onChange={set("subject")}>
-                  {["General Question", "Custom Cake Order", "Event / Wedding Cake", "Delivery Question", "Feedback"].map((s) => <MenuItem key={s}>{s}</MenuItem>)}
+                  {["General Question", "Custom Cake Order", "Event / Wedding Cake", "Delivery Question", "Feedback"].map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
                 </TextField>
               </div>
               <div className="mt-4">
