@@ -1,0 +1,404 @@
+{
+ "admin_users": [
+  {
+   "id": 1,
+   "username": "admin",
+   "password_hash": "2913b0363a9175a6b44e9241edc2f5b9:41dae170b08e6b6888f31404167887397dc64ec91ebe5ca5be4898a11888c140db176ab05ac43246f344e711441f72def4d6bae033d943b9da0beb7120aafeb8",
+   "name": "Cake Delight Admin"
+  }
+ ],
+ "products": [
+  {
+   "id": 1,
+   "rating": 4.9,
+   "reviews": 128,
+   "badge": "Best Seller",
+   "bestseller": 1,
+   "active": 1,
+   "long_description": "Our signature Chocolate Truffle Cake layers moist chocolate sponge with silky dark truffle ganache, finished with hand-rolled chocolate curls and a dusting of premium cocoa. Made fresh to order with imported Belgian chocolate.",
+   "created_at": "2026-08-28T06:55:42.320Z",
+   "name": "Chocolate Truffle Cake",
+   "category": "birthday",
+   "price": 2500,
+   "image": "/img/prod-chocolate-truffle.jpg",
+   "description": "Rich chocolate layers with silky truffle ganache and chocolate curls."
+  },
+  {
+   "id": 2,
+   "rating": 4.8,
+   "reviews": 96,
+   "badge": "",
+   "bestseller": 1,
+   "active": 1,
+   "long_description": "A timeless classic — deep red velvet sponge with buttermilk tenderness, layered with silky cream cheese frosting and coated in red velvet crumbs, topped with fresh raspberries.",
+   "created_at": "2026-08-29T06:55:42.320Z",
+   "name": "Red Velvet Cake",
+   "category": "anniversary",
+   "price": 2800,
+   "image": "/img/prod-red-velvet.jpg",
+   "description": "Classic red velvet with smooth cream cheese frosting."
+  },
+  {
+   "id": 3,
+   "rating": 4.9,
+   "reviews": 74,
+   "badge": "Kids Favorite",
+   "bestseller": 1,
+   "active": 1,
+   "long_description": "Every child's dream cake! A magical unicorn with a pastel buttercream mane in pink, lavender and mint, a golden horn and edible glitter stars. Funfetti sponge inside makes every slice a party.",
+   "created_at": "2026-08-30T06:55:42.320Z",
+   "name": "Unicorn Kids Cake",
+   "category": "kids",
+   "price": 3000,
+   "image": "/img/prod-unicorn.jpg",
+   "description": "Magical pastel mane, golden horn and glitter stars."
+  },
+  {
+   "id": 4,
+   "rating": 4.8,
+   "reviews": 61,
+   "badge": "Trending",
+   "bestseller": 1,
+   "active": 1,
+   "long_description": "The internet's favorite flavor — soft sponge layered with velvety Lotus Biscoff spread, a glossy caramel drip, crushed biscuit crumbs and whole Lotus biscuits on top.",
+   "created_at": "2026-08-31T06:55:42.320Z",
+   "name": "Lotus Biscoff Cake",
+   "category": "birthday",
+   "price": 2700,
+   "image": "/img/prod-biscoff.jpg",
+   "description": "Caramel drip, Lotus biscuits and biscoff spread."
+  },
+  {
+   "id": 5,
+   "rating": 5,
+   "reviews": 52,
+   "badge": "Premium",
+   "bestseller": 1,
+   "active": 1,
+   "long_description": "A show-stopping three-tier wedding cake in smooth ivory buttercream with hand-piped pearl details, blush garden roses and cascading greenery. Fully customizable to your wedding palette.",
+   "created_at": "2026-09-01T06:55:42.320Z",
+   "name": "Floral Wedding Cake",
+   "category": "wedding",
+   "price": 6500,
+   "image": "/img/cat-wedding.jpg",
+   "description": "Three ivory tiers with blush roses and pearl details."
+  },
+  {
+   "id": 6,
+   "rating": 4.9,
+   "reviews": 45,
+   "badge": "",
+   "bestseller": 0,
+   "active": 1,
+   "long_description": "Celebrate love with sweetness — a heart-shaped red velvet cake with cream cheese frosting, fresh raspberries, dried rose petals and an elegant gold topper.",
+   "created_at": "2026-09-02T06:55:42.320Z",
+   "name": "Heart Anniversary Cake",
+   "category": "anniversary",
+   "price": 3200,
+   "image": "/img/cat-anniversary.jpg",
+   "description": "Heart-shaped red velvet with rose petals."
+  },
+  {
+   "id": 7,
+   "rating": 4.8,
+   "reviews": 38,
+   "badge": "",
+   "bestseller": 0,
+   "active": 1,
+   "long_description": "Little treats, big happiness! A box of six gourmet cupcakes with tall swirls of blush-pink buttercream, gold sprinkles and rose petals.",
+   "created_at": "2026-09-03T06:55:42.320Z",
+   "name": "Celebration Cupcakes (Box of 6)",
+   "category": "cupcakes",
+   "price": 1200,
+   "image": "/img/cat-cupcakes.jpg",
+   "description": "Swirls of pink buttercream with gold sprinkles."
+  },
+  {
+   "id": 8,
+   "rating": 4.7,
+   "reviews": 29,
+   "badge": "",
+   "bestseller": 0,
+   "active": 1,
+   "long_description": "A party in every slice! Layers of colorful funfetti sponge under pastel pink buttercream with rainbow sprinkles.",
+   "created_at": "2026-09-04T06:55:42.320Z",
+   "name": "Rainbow Party Cake",
+   "category": "kids",
+   "price": 2800,
+   "image": "/img/cat-kids.jpg",
+   "description": "Colorful Funfetti sponge with pastel buttercream."
+  }
+ ],
+ "flavors": [
+  {
+   "id": 1,
+   "name": "Chocolate Truffle",
+   "description": "Belgian chocolate sponge with dark truffle ganache",
+   "tag": "classic",
+   "active": 1
+  },
+  {
+   "id": 2,
+   "name": "Red Velvet",
+   "description": "Classic buttermilk red velvet with cream cheese frosting",
+   "tag": "classic",
+   "active": 1
+  },
+  {
+   "id": 3,
+   "name": "Vanilla Bean",
+   "description": "Madagascar vanilla sponge with silky buttercream",
+   "tag": "classic",
+   "active": 1
+  },
+  {
+   "id": 4,
+   "name": "Lotus Biscoff",
+   "description": "Spiced biscoff spread with caramel drip",
+   "tag": "premium",
+   "active": 1
+  },
+  {
+   "id": 5,
+   "name": "Pistachio Rose",
+   "description": "Roasted pistachio sponge with rose cream",
+   "tag": "premium",
+   "active": 1
+  },
+  {
+   "id": 6,
+   "name": "Chocolate Fudge",
+   "description": "Double chocolate fudge with ganache layers",
+   "tag": "classic",
+   "active": 1
+  },
+  {
+   "id": 7,
+   "name": "Funfetti",
+   "description": "Vanilla sponge loaded with rainbow sprinkles",
+   "tag": "classic",
+   "active": 1
+  },
+  {
+   "id": 8,
+   "name": "Strawberry Cream",
+   "description": "Fresh strawberry compote with whipped cream",
+   "tag": "fruity",
+   "active": 1
+  },
+  {
+   "id": 9,
+   "name": "Mango Delight",
+   "description": "Seasonal mango chunks with mango mousse",
+   "tag": "fruity",
+   "active": 1
+  },
+  {
+   "id": 10,
+   "name": "Butterscotch",
+   "description": "Caramel butterscotch with praline crunch",
+   "tag": "premium",
+   "active": 1
+  },
+  {
+   "id": 11,
+   "name": "Caramel Coffee",
+   "description": "Espresso sponge with salted caramel",
+   "tag": "premium",
+   "active": 1
+  },
+  {
+   "id": 12,
+   "name": "Coconut Dream",
+   "description": "Coconut sponge with mascarpone cream",
+   "tag": "fruity",
+   "active": 1
+  }
+ ],
+ "testimonials": [
+  {
+   "id": 1,
+   "name": "Usman Ali",
+   "location": "Sahiwal",
+   "text": "From ordering to delivery, everything was smooth. The cake was fresh and delicious and the service was even better. Highly recommended!",
+   "rating": 5,
+   "active": 1
+  },
+  {
+   "id": 2,
+   "name": "Ayesha Malik",
+   "location": "Sahiwal",
+   "text": "The custom cake for my daughter's birthday was exactly what I imagined — beautiful design and amazing taste. Will order again for sure!",
+   "rating": 5,
+   "active": 1
+  },
+  {
+   "id": 3,
+   "name": "Sara & Bilal",
+   "location": "Sahiwal",
+   "text": "Our anniversary cake was a big hit! So creative, delivered on time and in perfect condition. Cake Delight never disappoints.",
+   "rating": 5,
+   "active": 1
+  }
+ ],
+ "orders": [
+  {
+   "id": 1,
+   "order_no": "CD-2026-0001",
+   "customer_name": "Fatima Khan",
+   "phone": "03001234567",
+   "email": "fatima@example.pk",
+   "address": "House 12, Street 3, Farooq Colony",
+   "city": "Sahiwal",
+   "notes": "",
+   "delivery_date": "2026-09-21",
+   "delivery_slot": "evening",
+   "subtotal": 5300,
+   "delivery_fee": 0,
+   "total": 5300,
+   "payment_method": "cod",
+   "status": "delivered",
+   "created_at": "2026-09-21T06:55:42.320Z"
+  },
+  {
+   "id": 2,
+   "order_no": "CD-2026-0002",
+   "customer_name": "Hamza Riaz",
+   "phone": "03217654321",
+   "email": "",
+   "address": "Flat 4B, Gulshan View, Canal Road",
+   "city": "Sahiwal",
+   "notes": "Ring the bell twice",
+   "delivery_date": "2026-09-25",
+   "delivery_slot": "afternoon",
+   "subtotal": 2800,
+   "delivery_fee": 200,
+   "total": 3000,
+   "payment_method": "cod",
+   "status": "out-for-delivery",
+   "created_at": "2026-09-25T06:55:42.320Z"
+  },
+  {
+   "id": 3,
+   "order_no": "CD-2026-0003",
+   "customer_name": "Nimra Aslam",
+   "phone": "03331234567",
+   "email": "nimra@example.pk",
+   "address": "House 88, Block C, Taj City",
+   "city": "Sahiwal",
+   "notes": "",
+   "delivery_date": "2026-09-27",
+   "delivery_slot": "morning",
+   "subtotal": 6500,
+   "delivery_fee": 0,
+   "total": 6500,
+   "payment_method": "cod",
+   "status": "pending",
+   "created_at": "2026-09-26T02:07:42.320Z"
+  }
+ ],
+ "order_items": [
+  {
+   "id": 1,
+   "order_id": 1,
+   "product_id": 1,
+   "name": "Chocolate Truffle Cake",
+   "image": "/img/prod-chocolate-truffle.jpg",
+   "unit_price": 3500,
+   "qty": 1,
+   "size": "3 lb",
+   "flavor": "Chocolate Truffle",
+   "message": "Happy Birthday Ahmed!"
+  },
+  {
+   "id": 2,
+   "order_id": 1,
+   "product_id": 7,
+   "name": "Celebration Cupcakes (Box of 6)",
+   "image": "/img/cat-cupcakes.jpg",
+   "unit_price": 1200,
+   "qty": 1,
+   "size": "2 lb",
+   "flavor": "",
+   "message": ""
+  },
+  {
+   "id": 3,
+   "order_id": 1,
+   "product_id": 2,
+   "name": "Red Velvet Cake",
+   "image": "/img/prod-red-velvet.jpg",
+   "unit_price": 2400,
+   "qty": 1,
+   "size": "1 lb",
+   "flavor": "Red Velvet",
+   "message": ""
+  },
+  {
+   "id": 4,
+   "order_id": 2,
+   "product_id": 8,
+   "name": "Rainbow Party Cake",
+   "image": "/img/cat-kids.jpg",
+   "unit_price": 2800,
+   "qty": 1,
+   "size": "2 lb",
+   "flavor": "Funfetti",
+   "message": "Happy 6th Zoya!"
+  },
+  {
+   "id": 5,
+   "order_id": 3,
+   "product_id": 5,
+   "name": "Floral Wedding Cake",
+   "image": "/img/cat-wedding.jpg",
+   "unit_price": 6500,
+   "qty": 1,
+   "size": "2 lb",
+   "flavor": "Vanilla Bean",
+   "message": ""
+  }
+ ],
+ "custom_orders": [
+  {
+   "id": 1,
+   "ref_no": "CQ-0001",
+   "name": "Ayesha Malik",
+   "phone": "03211234567",
+   "email": "ayesha@example.pk",
+   "occasion": "🎂 Birthday",
+   "design": "A two-tier pink and gold cake with roses on top, 'Happy Birthday Ayesha' written on it.",
+   "flavor": "Pistachio Rose",
+   "size": "Medium · 2.5 lb",
+   "servings": 12,
+   "delivery_date": "2026-09-29",
+   "message": "Happy Birthday Ayesha!",
+   "budget": "Rs. 5,000 – 8,000",
+   "status": "quoted",
+   "admin_notes": "Quoted Rs. 6,500 on WhatsApp",
+   "created_at": "2026-09-25T18:55:42.320Z"
+  }
+ ],
+ "messages": [
+  {
+   "id": 1,
+   "name": "Bilal Ahmed",
+   "email": "bilal@example.pk",
+   "phone": "03011112222",
+   "subject": "Event / Wedding Cake",
+   "message": "Hi! I need a 3-tier wedding cake for 150 guests on the 20th. Can you share options and pricing?",
+   "is_read": 0,
+   "created_at": "2026-09-25T23:43:42.320Z"
+  },
+  {
+   "id": 2,
+   "name": "Hina Tariq",
+   "email": "hina@example.pk",
+   "phone": "",
+   "subject": "General Question",
+   "message": "Do you offer eggless cakes? Also, is same-day delivery available for cupcakes?",
+   "is_read": 1,
+   "created_at": "2026-09-24T06:55:42.320Z"
+  }
+ ]
+}

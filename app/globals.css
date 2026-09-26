@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/* ============ Cake Delight — design tokens (from approved mockup) ============ */
+@theme {
+  --color-cream: #fdf6f2;
+  --color-cream2: #faf0ea;
+  --color-blush: #f8e9e4;
+  --color-blush2: #f3ddd6;
+  --color-pink: #e63c64;
+  --color-pink2: #d02a56;
+  --color-pinksoft: #fbdde6;
+  --color-pinkfaint: #fdeef2;
+  --color-choco: #3b241f;
+  --color-choco2: #5b3731;
+  --color-ink: #402c26;
+  --color-mut: #7d6a63;
+  --color-mut2: #b39c95;
+  --color-line: #f0ded7;
+  --color-line2: #e7d2c9;
+  --color-gold: #d9a441;
+
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-vibes), "Segoe Script", cursive;
+
+  /* ============ Modular type scale (paired line-heights) ============
+     2xs 11px  — micro labels, uppercase tags
+     xs  12px  — captions, meta, table headers
+     sm  14px  — secondary body, nav, table cells
+     base 16px — primary body copy
+     md  17px  — lead paragraphs, hero subtext
+     lg  18px  — card titles
+     xl+ remain Tailwind defaults (20/24/30/36/48px)
+  ==================================================================== */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1.5;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.55;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1rem;
+  --text-base--line-height: 1.65;
+  --text-md: 1.0625rem;
+  --text-md--line-height: 1.65;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.45;
+
+  --shadow-card: 0 2px 10px rgba(120, 60, 50, 0.06);
+  --shadow-soft: 0 10px 30px rgba(190, 110, 110, 0.14);
+  --shadow-pop: 0 18px 50px rgba(170, 80, 90, 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-pink);
+  color: #fff;
+}
+
+/* ---------- Typographic polish ---------- */
+h1, h2, h3, h4 {
+  letter-spacing: -0.012em;
+  overflow-wrap: break-word;
+}
+h1, h2, h3 {
+  text-wrap: balance;
+}
+p, li, blockquote {
+  text-wrap: pretty;
+}
+/* script accent font needs room for descenders */
+.font-script {
+  line-height: 1.35;
+  padding-bottom: 0.06em;
+}
+/* tabular numerals for prices/totals */
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---------- Accessibility ---------- */
+:focus-visible {
+  outline: 2.5px solid var(--color-pink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+::placeholder {
+  color: var(--color-mut2);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* thin elegant scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d9b8ac;
+}
+
+/* status pill colors (orders) */
+.st-pending { background: #fff3e0; color: #c77800; }
+.st-confirmed { background: #e3f0ff; color: #2563c9; }
+.st-baking { background: #f3e8ff; color: #8b5cf6; }
+.st-out-for-delivery { background: #fde8ec; color: #e63c64; }
+.st-delivered, .st-completed { background: #e3f9ec; color: #229954; }
+.st-cancelled { background: #fdeaea; color: #d14545; }
+.st-new { background: #fff3e0; color: #c77800; }
+.st-discussing { background: #e3f0ff; color: #2563c9; }
+.st-quoted { background: #f3e8ff; color: #8b5cf6; }
