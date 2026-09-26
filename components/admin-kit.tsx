@@ -28,14 +28,29 @@ export function useAdminApi() {
 export function useAdmin() {
   const router = useRouter();
   const [name, setName] = useState<string | null>(null);
+  const [offline, setOffline] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
+    let alive = true;
     const token = localStorage.getItem("cd_admin_token");
     if (!token) { router.replace("/admin/login"); return; }
-    fetch("/api/admin/me", { headers: { Authorization: `Bearer ${token}` } })
-      .then(async (r) => (r.ok ? setName((await r.json()).admin.name) : (localStorage.removeItem("cd_admin_token"), router.replace("/admin/login"))))
-      .catch(() => router.replace("/admin/login"));
-  }, [router]);
-  return name;
+    (async () => {
+      // retry transient network failures — a flaky connection must NEVER log the admin out
+      for (let tryNo = 0; tryNo < 3; tryNo++) {
+        try {
+          const r = await fetch("/api/admin/me", { headers: { Authorization: `Bearer ${token}` } });
+          if (!alive) return;
+          if (r.ok) { setName((await r.json()).admin.name); setOffline(false); return; }
+          if (r.status === 401) { localStorage.removeItem("cd_admin_token"); router.replace("/admin/login"); return; }
+          throw new Error("server error " + r.status);
+        } catch { /* network hiccup — retry */ }
+        await new Promise((res) => setTimeout(res, 900 * (tryNo + 1)));
+      }
+      if (alive) setOffline(true);
+    })();
+    return () => { alive = false; };
+  }, [router, attempt]);
+  return { name, offline, retry: () => { setOffline(false); setAttempt((n) => n + 1); } };
 }
 
 export function Pill({ status }: { status: string }) {

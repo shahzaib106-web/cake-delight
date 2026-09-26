@@ -1,14 +1,9 @@
 "use client";
-/** Admin login — premium card, icon fields, show/hide password */
-import { useState } from "react";
+/** Admin login — premium card, plain Tailwind fields (labels above inputs, zero overlap) */
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import Alert from "@mui/material/Alert";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
@@ -23,6 +18,15 @@ export default function AdminLoginPage() {
   const [busy, setBusy] = useState(false);
   const router = useRouter();
 
+  // already signed in? go straight to the dashboard (never blocks the form)
+  useEffect(() => {
+    const token = localStorage.getItem("cd_admin_token");
+    if (!token) return;
+    fetch("/api/admin/me", { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => { if (r.ok) router.replace("/admin"); else if (r.status === 401) localStorage.removeItem("cd_admin_token"); })
+      .catch(() => {});
+  }, [router]);
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true); setError("");
@@ -33,18 +37,8 @@ export default function AdminLoginPage() {
       localStorage.setItem("cd_admin_token", d.token);
       localStorage.setItem("cd_admin_name", d.name);
       router.replace("/admin");
-    } catch (ex: any) { setError(ex.message); setBusy(false); }
+    } catch (ex: any) { setError(ex.message || "Could not sign in — please try again."); setBusy(false); }
   };
-
-  const field = (props: any) => ({
-    fullWidth: true,
-    sx: {
-      "& .MuiOutlinedInput-root": { borderRadius: 2.5, bgcolor: "#fdfaf8", py: 0.5, "& fieldset": { borderColor: "#eadfd8" }, "&:hover fieldset": { borderColor: "#e63c64" }, "&.Mui-focused fieldset": { borderColor: "#e63c64", borderWidth: "1.5px" } },
-      "& .MuiInputAdornment-root": { color: "#b39c93" },
-      "& input": { fontSize: 15 },
-    },
-    ...props,
-  });
 
   return (
     <div className="relative grid min-h-screen place-items-center overflow-hidden bg-gradient-to-br from-[#33201b] via-choco to-[#160d0b] p-5">
@@ -76,56 +70,50 @@ export default function AdminLoginPage() {
               <p className="mt-1 text-xs font-medium uppercase tracking-[0.28em] text-mut">Admin Panel · Sahiwal</p>
             </div>
 
-            {error && <Alert severity="error" sx={{ mb: 3, borderRadius: 2.5, fontSize: 13.5 }}>⚠ {error}</Alert>}
+            {error && (
+              <div className="mb-6 flex items-center gap-2.5 rounded-2xl border border-[#f3c4ce] bg-[#fdeef2] px-4 py-3 text-sm font-medium text-[#c22b50]" role="alert">
+                <span className="text-base">⚠</span> {error}
+              </div>
+            )}
 
-            {/* fields — grid gap so they can never touch */}
-            <div className="grid gap-4">
-              <TextField
-                {...field({
-                  label: "Email address",
-                  type: "email",
-                  value: email,
-                  onChange: (e: any) => setEmail(e.target.value),
-                  required: true,
-                  autoComplete: "email",
-                  placeholder: "admin@cakedelight.pk",
-                  slotProps: { input: { startAdornment: (<InputAdornment position="start"><MailRoundedIcon sx={{ fontSize: 19 }} /></InputAdornment>) } },
-                })}
-              />
-              <TextField
-                {...field({
-                  label: "Password",
-                  type: showPw ? "text" : "password",
-                  value: password,
-                  onChange: (e: any) => setPassword(e.target.value),
-                  required: true,
-                  autoComplete: "current-password",
-                  placeholder: "••••••••",
-                  slotProps: {
-                    input: {
-                      startAdornment: (<InputAdornment position="start"><LockRoundedIcon sx={{ fontSize: 19 }} /></InputAdornment>),
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton onClick={() => setShowPw((v) => !v)} aria-label={showPw ? "Hide password" : "Show password"} edge="end" sx={{ color: "#b39c93" }}>
-                            {showPw ? <VisibilityOffRoundedIcon sx={{ fontSize: 19 }} /> : <VisibilityRoundedIcon sx={{ fontSize: 19 }} />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    },
-                  },
-                })}
-              />
+            {/* fields — labels above inputs, 22px of clear air between them */}
+            <div className="grid gap-5.5">
+              <label className="block">
+                <span className="mb-2 block text-[13px] font-semibold text-choco">Email or username</span>
+                <span className="flex items-center gap-2.5 rounded-2xl border border-[#eadfd8] bg-[#fdfaf8] px-4 transition focus-within:border-pink focus-within:bg-white focus-within:shadow-[0_0_0_3px_rgba(230,60,100,.13)]">
+                  <MailRoundedIcon sx={{ fontSize: 19, color: "#b39c93" }} />
+                  <input
+                    type="text" required autoComplete="username" inputMode="email" placeholder="admin@cakedelight.pk (or just: admin)"
+                    value={email} onChange={(e) => setEmail(e.target.value)}
+                    className="h-[52px] w-full bg-transparent text-[15px] text-choco outline-none placeholder:text-[#c9b6ae]"
+                  />
+                </span>
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-[13px] font-semibold text-choco">Password</span>
+                <span className="flex items-center gap-2.5 rounded-2xl border border-[#eadfd8] bg-[#fdfaf8] px-4 transition focus-within:border-pink focus-within:bg-white focus-within:shadow-[0_0_0_3px_rgba(230,60,100,.13)]">
+                  <LockRoundedIcon sx={{ fontSize: 19, color: "#b39c93" }} />
+                  <input
+                    type={showPw ? "text" : "password"} required autoComplete="current-password" placeholder="••••••••"
+                    value={password} onChange={(e) => setPassword(e.target.value)}
+                    className="h-[52px] w-full bg-transparent text-[15px] text-choco outline-none placeholder:text-[#c9b6ae]"
+                  />
+                  <button type="button" onClick={() => setShowPw((v) => !v)} aria-label={showPw ? "Hide password" : "Show password"}
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-[#b39c93] transition hover:bg-pinkfaint hover:text-pink">
+                    {showPw ? <VisibilityOffRoundedIcon sx={{ fontSize: 19 }} /> : <VisibilityRoundedIcon sx={{ fontSize: 19 }} />}
+                  </button>
+                </span>
+              </label>
             </div>
 
-            <Button type="submit" variant="contained" fullWidth size="large" disabled={busy} endIcon={<LoginRoundedIcon />}
-              sx={{
-                mt: 4, py: 1.7, fontSize: 15.5, fontWeight: 600, borderRadius: 2.5,
-                background: "linear-gradient(135deg,#e63c64 0%,#ef5f84 100%)",
-                boxShadow: "0 12px 28px rgba(230,60,100,.4)",
-                "&:hover": { background: "linear-gradient(135deg,#d42f56 0%,#e34e74 100%)", boxShadow: "0 14px 32px rgba(230,60,100,.5)" },
-              }}>
+            <button type="submit" disabled={busy}
+              className="mt-6 flex h-[54px] w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-pink to-[#ef5f84] text-[15.5px] font-semibold text-white shadow-[0_12px_28px_rgba(230,60,100,.4)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(230,60,100,.5)] disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-75">
+              {busy
+                ? <span className="h-[18px] w-[18px] animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                : <LoginRoundedIcon sx={{ fontSize: 18 }} />}
               {busy ? "Signing in…" : "Sign In to Dashboard"}
-            </Button>
+            </button>
 
             <div className="mt-5 rounded-2xl border border-dashed border-[#ecd9d2] bg-[#fdf6f2] px-4 py-3 text-center">
               <p className="text-2xs font-semibold uppercase tracking-[0.18em] text-mut">Admin credentials</p>

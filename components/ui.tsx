@@ -21,7 +21,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         <span className={`font-display text-[25px] font-extrabold tracking-tight ${light ? "text-white" : "text-choco"}`}>
           Cake<span className="text-pink">Delight</span>
         </span>
-        <span className={`mt-0.5 block text-2xs font-semibold uppercase tracking-[0.34em] ${light ? "text-white/50" : "text-mut"}`}>Sahiwal</span>
+        <span className={`mt-0.5 block pl-[3px] text-2xs font-semibold uppercase tracking-[0.34em] ${light ? "text-white/50" : "text-mut"}`}>Sahiwal</span>
       </span>
     </span>
   );

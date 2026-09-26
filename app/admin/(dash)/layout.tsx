@@ -22,9 +22,21 @@ const NAV = [
 ] as const;
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const name = useAdmin();
+  const { name, offline, retry } = useAdmin();
   const pathname = usePathname();
   const router = useRouter();
+  if (offline) return (
+    <div className="grid min-h-screen place-items-center bg-cream p-6">
+      <div className="max-w-sm rounded-3xl border border-line bg-white p-8 text-center shadow-soft">
+        <span className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-pinkfaint text-2xl">📡</span>
+        <h2 className="font-display text-xl font-bold text-choco">Connection problem</h2>
+        <p className="mt-2 text-sm text-mut">We couldn&apos;t reach the server. Your session is safe — just retry.</p>
+        <button onClick={retry} className="mt-5 rounded-full bg-pink px-6 py-2.5 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(230,60,100,.32)] transition hover:-translate-y-0.5 hover:bg-pink2">
+          Retry
+        </button>
+      </div>
+    </div>
+  );
   if (name === null) return <div className="grid min-h-screen place-items-center bg-cream text-mut">Loading dashboard… 🍰</div>;
 
   return (
