@@ -281,14 +281,28 @@ export async function createCustomOrder(d: any): Promise<{ ref_no: string }> {
 }
 
 /* ------------------------------- admin auth ------------------------------ */
+/** designated admin account (Supabase Auth) — env-overridable */
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "admin@cakedelight.pk").toLowerCase();
+
 export async function adminLogin(username: string, password: string): Promise<{ token: string; name: string }> {
+  const uname = String(username || "").trim().toLowerCase();
   if (usingSupabase) {
-    // Supabase mode: admin authenticates against Supabase Auth (email + password)
+    // Supabase mode: admin authenticates against Supabase Auth.
+    // Accepts the full email (admin@cakedelight.pk) or just "admin".
+    const email = uname.includes("@") ? uname : `${uname}@cakedelight.pk`;
+    if (email !== ADMIN_EMAIL) throw new Error("This account does not have admin access.");
     const anon = process.env.SUPABASE_ANON_KEY || SUPA_SERVICE;
     const auth = createClient(SUPA_URL, anon, { auth: { persistSession: false } });
-    const { data, error } = await auth.auth.signInWithPassword({ email: username, password });
-    if (error || !data.session) throw new Error("Invalid credentials");
-    return { token: data.session.access_token, name: data.user?.email?.split("@")[0] || "Admin" };
+    const { data, error } = await auth.auth.signInWithPassword({ email, password });
+    if (error || !data.session) {
+      const msg = String(error?.message || "");
+      if (/rate limit|too many|over_request/i.test(msg)) throw new Error("Too many attempts — please wait a minute and try again.");
+      if (/email not confirmed/i.test(msg)) throw new Error("The admin email isn't confirmed yet — confirm it in Supabase → Authentication → Users.");
+      throw new Error("Invalid email or password.");
+    }
+    // hard check: only the designated admin may enter the dashboard
+    if (String(data.user?.email || "").toLowerCase() !== ADMIN_EMAIL) throw new Error("This account does not have admin access.");
+    return { token: data.session.access_token, name: "Admin" };
   }
   const db = readDB();
   const u = db.admin_users.find((x) => x.username === String(username || "").trim());
@@ -301,7 +315,9 @@ export async function verifyAdmin(token: string): Promise<{ name: string } | nul
   if (usingSupabase) {
     const auth = createClient(SUPA_URL, process.env.SUPABASE_ANON_KEY || SUPA_SERVICE, { auth: { persistSession: false } });
     const { data } = await auth.auth.getUser(token);
-    return data?.user ? { name: data.user.email?.split("@")[0] || "Admin" } : null;
+    // only the designated admin account gets dashboard access
+    if (!data?.user || String(data.user.email || "").toLowerCase() !== ADMIN_EMAIL) return null;
+    return { name: "Admin" };
   }
   const id = verifyToken(token);
   if (!id) return null;

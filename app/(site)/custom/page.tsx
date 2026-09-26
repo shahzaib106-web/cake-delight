@@ -144,9 +144,9 @@ export default function CustomPage() {
                     <div className="grid gap-3.5 sm:grid-cols-3">
                       {flavors.map((f) => (
                         <button key={f.id} onClick={() => setFlavor(f.name)}
-                          className={`relative rounded-2xl border-[1.5px] p-4 text-left transition ${flavor === f.name ? "border-pink bg-pinkfaint shadow-[0_0_0_3px_#fdeef2]" : "border-line2 bg-white hover:border-pink"}`}>
-                          <span className="absolute right-3 top-3 rounded-full bg-pinkfaint px-2 py-0.5 text-2xs font-semibold uppercase tracking-wide text-pink">{f.tag}</span>
-                          <b className="block text-base text-choco">{f.name}</b>
+                          className={`rounded-2xl border-[1.5px] p-4 text-left transition ${flavor === f.name ? "border-pink bg-pinkfaint shadow-[0_0_0_3px_#fdeef2]" : "border-line2 bg-white hover:border-pink"}`}>
+                          <span className="mb-1.5 inline-block rounded-full bg-pinkfaint px-2.5 py-1 text-2xs font-semibold uppercase tracking-wide text-pink">{f.tag}</span>
+                          <b className="block text-base leading-snug text-choco">{f.name}</b>
                           <small className="mt-1 block text-xs leading-snug text-mut">{f.description}</small>
                         </button>
                       ))}
